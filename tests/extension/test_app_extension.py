@@ -13,5 +13,5 @@ class AppExtension(FlaskFHIRTestCase):
             return 'Welcome!'
 
     def test_metadata(self):
-        for resp in self.iter_responses('/metadata'):
-            self.assertEqual(resp.json['resourceType'], 'CapabilityStatement')
+        resp = self.get('/metadata')
+        self.assertEqual(resp.json['resourceType'], 'CapabilityStatement')
