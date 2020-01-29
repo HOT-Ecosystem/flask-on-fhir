@@ -2,8 +2,8 @@
 """
     flask_on_fhir
     ~~~~
-    Flask-CORS is a flask extension allowing you to support FHIR
-    :license: BSD, see LICENSE for more details.
+    Flask-on-FHIR is a flask extension helping you to build FHIR API
+    :license: MIT, see LICENSE for more details.
 """
 from .extension import FHIR
 
