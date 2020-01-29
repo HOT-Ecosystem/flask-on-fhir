@@ -1,5 +1,5 @@
 """
-Flask-FHIR
+Flask-on-FHIR
 -------------
 
 This is the description for that library
@@ -8,15 +8,15 @@ from setuptools import setup
 
 
 setup(
-    name='Flask-FHIR',
+    name='Flask-on-FHIR',
     version='1.0',
-    url='http://github.com/jiaola/flask-fhir',
+    url='http://github.com/jiaola/flask-on-fhir',
     license='BSD',
     author='Dazhi Jiao',
     author_email='djiao@jhu.edu',
     description='A FLASK extension to provide FHIR API',
     long_description=__doc__,
-    packages=['flask_fhir'],
+    packages=['flask_on_fhir'],
     zip_safe=False,
     include_package_data=True,
     platforms='any',

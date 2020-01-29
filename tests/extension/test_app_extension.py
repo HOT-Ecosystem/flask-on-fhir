@@ -1,6 +1,6 @@
 from ..base_test import FlaskFHIRTestCase
 from flask import Flask, jsonify
-from flask_fhir import *
+from flask_on_fhir import *
 
 
 class AppExtension(FlaskFHIRTestCase):

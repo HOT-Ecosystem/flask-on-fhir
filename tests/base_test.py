@@ -1,6 +1,6 @@
 from flask import Flask
 import unittest
-from flask_fhir import *
+from flask_on_fhir import *
 
 
 class FlaskFHIRTestCase(unittest.TestCase):
