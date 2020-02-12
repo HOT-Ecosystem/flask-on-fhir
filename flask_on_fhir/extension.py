@@ -1,7 +1,9 @@
-from flask import Flask
-from typing import Any, Dict, Union
+from flask_restful import Api
+
+from .resources.capability_statement import CapabilityStatementResource
+from .resources.fhir_resource import FHIRResource
 from .core import *
-from flask_on_fhir.resources.capability_statement import CapabilityStatementProvider
+
 LOG = logging.getLogger(__name__)
 
 
@@ -9,10 +11,16 @@ class FHIR(object):
 
     def __init__(self, app=None, **kwargs):
         self._options = kwargs
+        self.resources = []
         if app is not None:
-            self.init_app(app)
+            self.api = Api(app)
+            self.init_app(self.api)
 
-    def init_app(self, app: Flask, **kwargs):
-        app.add_url_rule('/metadata', 'CapabilityStatement',
-                         CapabilityStatementProvider.as_view('CapabilityStatement', self), ['GET'])
+    def init_app(self, api: Api, **kwargs):
+        # app.add_url_rule('/metadata', 'CapabilityStatement',
+        #                  CapabilityStatementProvider.as_view('CapabilityStatement', self), ['GET'])
+        self.add_fhir_resource(CapabilityStatementResource, '/metadata', resource_class_kwargs={'fhir': self})
 
+    def add_fhir_resource(self, resource: FHIRResource, *urls, **kwargs):
+        self.api.add_resource(resource, *urls, **kwargs)
+        self.resources.append(resource)

@@ -16,7 +16,7 @@ setup(
     author_email='djiao@jhu.edu',
     description='A FLASK extension to provide FHIR API',
     long_description=__doc__,
-    packages=['flask_on_fhir'],
+    packages=['flask_on_fhir', 'flask_on_fhir.resources'],
     zip_safe=False,
     include_package_data=True,
     platforms='any',
