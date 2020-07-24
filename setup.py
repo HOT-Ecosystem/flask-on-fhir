@@ -14,7 +14,7 @@ setup(
     license='BSD',
     author='Dazhi Jiao',
     author_email='djiao@jhu.edu',
-    description='A FLASK extension to provide FHIR API',
+    description='A FLASK extension to for building FHIR RESTful API',
     long_description=__doc__,
     packages=['flask_on_fhir', 'flask_on_fhir.resources'],
     zip_safe=False,
@@ -23,7 +23,7 @@ setup(
     install_requires=[
         'Flask'
     ],
-    python_requires='>=3.7',
+    python_requires='>=3.6',
     # extra_require={
     #     'test': tests_require,
     #     'doc': doc_require,
