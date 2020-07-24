@@ -1,6 +1,15 @@
-Click==7.0
-Flask==1.1.1
-itsdangerous==1.1.0
-Jinja2==2.10.3
-MarkupSafe==1.1.1
-Werkzeug==0.16.0
+################################################################################
+# This requirements file has been automatically generated from `Pipfile` with
+# `pipenv-to-requirements`
+#
+#
+# This has been done to maintain backward compatibility with tools and services
+# that do not support `Pipfile` yet.
+#
+# Do NOT edit it directly, use `pipenv install [-d]` to modify `Pipfile` and
+# `Pipfile.lock` and then regenerate `requirements*.txt`.
+################################################################################
+
+fhirclient
+flask-restful
+flask==1.1.1
