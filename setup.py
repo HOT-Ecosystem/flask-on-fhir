@@ -9,7 +9,7 @@ from setuptools import setup
 
 setup(
     name='Flask-on-FHIR',
-    version='1.0',
+    version='0.0.1.dev',
     url='http://github.com/jiaola/flask-on-fhir',
     license='BSD',
     author='Dazhi Jiao',
