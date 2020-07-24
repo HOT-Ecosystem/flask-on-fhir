@@ -1,4 +1,5 @@
 from flask_restful import Api
+from functools import wraps
 
 from .resources.capability_statement import CapabilityStatementResource
 from .resources.fhir_resource import FHIRResource
@@ -24,3 +25,13 @@ class FHIR(object):
     def add_fhir_resource(self, resource: FHIRResource, *urls, **kwargs):
         self.api.add_resource(resource, *urls, **kwargs)
         self.resources.append(resource)
+
+    def operation(self, name: str, **kwargs):
+        def decorator(func):
+            @wraps
+            def wrapper(*args, **kwargs):
+                return func(*args, **kwargs)
+            return wrapper
+        return decorator
+
+

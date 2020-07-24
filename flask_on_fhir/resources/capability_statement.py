@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 from flask import current_app, url_for
 from fhirclient.models.capabilitystatement import *
 from fhirclient.models.fhirdate import FHIRDate
@@ -8,6 +8,7 @@ from .fhir_resource import FHIRResource
 
 
 class CapabilityStatementResource(FHIRResource):
+    method_decorators = []
 
     def __init__(self, fhir: 'FHIR'):
         self.fhir = fhir
@@ -26,7 +27,7 @@ class CapabilityStatementResource(FHIRResource):
         cs.format = ['json']
         cs.kind = 'json'
         date = FHIRDate()
-        date.date = datetime.datetime.today()
+        date.date = datetime.today()
         cs.date = date
         rest: CapabilityStatementRest = CapabilityStatementRest()
         cs.rest = [rest]
