@@ -1,3 +1,4 @@
+from flask import Flask
 from flask_restful import Api
 from functools import wraps
 
@@ -13,13 +14,14 @@ class FHIR(object):
     def __init__(self, app=None, **kwargs):
         self._options = kwargs
         self.resources = []
+        self.api = None
         if app is not None:
-            self.api = Api(app)
-            self.init_app(self.api)
+            self.init_app(app)
 
-    def init_app(self, api: Api, **kwargs):
+    def init_app(self, app: Flask, **kwargs):
         # app.add_url_rule('/metadata', 'CapabilityStatement',
         #                  CapabilityStatementProvider.as_view('CapabilityStatement', self), ['GET'])
+        self.api = Api(app)
         self.add_fhir_resource(CapabilityStatementResource, '/metadata', resource_class_kwargs={'fhir': self})
 
     def add_fhir_resource(self, resource: FHIRResource, *urls, **kwargs):
