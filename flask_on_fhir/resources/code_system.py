@@ -8,8 +8,12 @@ parser.add_argument('system', type=str, required=False)
 
 
 class CodeSystemResource(FHIRResource):
-    def __init__(self, fhir: 'FHIR'):
-        self.fhir = fhir
+    def __init__(self):
+        ...
+
+    def get_resource_type(self) -> str:
+        return CodeSystem.resource_type
+
 
     # @self.fhir.operation('lookup')
     # def lookup(self):

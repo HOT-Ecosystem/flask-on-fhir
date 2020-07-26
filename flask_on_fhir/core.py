@@ -1,11 +1,17 @@
-from flask import request, current_app
+from flask import request, current_app, _app_ctx_stack
 from collections.abc import Iterable
 import logging
+from werkzeug.local import LocalProxy
 
 LOG = logging.getLogger(__name__)
 
 CONFIG_OPTIONS = []
 DEFAULT_OPTIONS = dict()
+
+
+def _find_fhir():
+    top = _app_ctx_stack.top
+    return top.fhir
 
 
 def get_fhir_options(app, *dicts):
@@ -69,3 +75,5 @@ def flexible_str(obj):
         return ', '.join(str(item) for item in sorted(obj))
     else:
         return str(obj)
+
+current_fhir = LocalProxy

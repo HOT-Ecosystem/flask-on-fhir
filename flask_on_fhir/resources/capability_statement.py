@@ -1,5 +1,5 @@
 from datetime import datetime
-from flask import current_app, url_for
+from flask import current_app, url_for, _app_ctx_stack, g
 from fhirclient.models.capabilitystatement import *
 from fhirclient.models.fhirdate import FHIRDate
 from flask_restful import Api, Resource
@@ -10,8 +10,8 @@ from .fhir_resource import FHIRResource
 class CapabilityStatementResource(FHIRResource):
     method_decorators = []
 
-    def __init__(self, fhir: 'FHIR'):
-        self.fhir = fhir
+    def __init__(self):
+        ...
 
     def get_resource_type(self) -> str:
         return CapabilityStatement.resource_type
@@ -34,9 +34,8 @@ class CapabilityStatementResource(FHIRResource):
         rest.mode = "server"
         rest.resource = []
         resource: FHIRResource
-        for rule in self.fhir.api.app.url_map.iter_rules():
-            if rule.endpoint in self.fhir.api.endpoints:
-                print(rule)
+        for rule in current_app.url_map.iter_rules():
+            print(rule)
         # for endpoint in self.api.endpoints:
         #     self.api.app.url_map
         #     res: CapabilityStatementRestResource = CapabilityStatementRestResource()
