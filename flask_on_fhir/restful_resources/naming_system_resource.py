@@ -13,7 +13,8 @@ class NamingSystemResource(FHIRResource):
     def __init__(self):
         ...
 
-    def get_resource_type(self) -> str:
+    @classmethod
+    def get_resource_type(cls) -> str:
         return NamingSystem.resource_type
 
     def build_resource(self, *args, **kwards) -> NamingSystem:

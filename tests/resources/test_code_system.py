@@ -13,9 +13,9 @@ class CodeSystemTestCase(FlaskFHIRTestCase):
         self.fhir: FHIR = FHIR(self.app)
         self.fhir.add_fhir_resource(CodeSystemResource, '/CodeSystem')
 
-    def test_lookup(self):
-        resp = self.get('/lookup')
-        print('response', resp.json)
+    # def test_lookup(self):
+    #     resp = self.get('/lookup')
+    #     print('response', resp.json)
 
 
 

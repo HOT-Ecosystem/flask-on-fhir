@@ -9,33 +9,8 @@ from flask_on_fhir.restful_resources.fhir_resource import FHIRResource
 class CapabilityStatementResource(FHIRResource):
     method_decorators = []
 
-    def __init__(self):
-        ...
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
     def get_resource_type(self) -> str:
         return CapabilityStatement.resource_type
-
-    def build_resource(self) -> CapabilityStatement:
-        cs: CapabilityStatement = CapabilityStatement()
-        cs.fhirVersion = '4.0.0'
-        cs.status = 'active'
-        cs.acceptUnknown = 'false'
-        cs.format = ['json']
-        cs.kind = 'json'
-        date = FHIRDate()
-        date.date = datetime.today()
-        cs.date = date
-        rest: CapabilityStatementRest = CapabilityStatementRest()
-        cs.rest = [rest]
-        rest.mode = "server"
-        rest.resource = []
-        resource: FHIRResource
-        for rule in current_app.url_map.iter_rules():
-            print(rule)
-        # for endpoint in self.api.endpoints:
-        #     self.api.app.url_map
-        #     res: CapabilityStatementRestResource = CapabilityStatementRestResource()
-        #     res.resource_type = resource.get_resource_type()
-        #     res.profile = f"http://hl7.org/fhir/StructureDefinition/{res.resource_type}"
-        #     rest.resource.append(rest)
-        return cs
