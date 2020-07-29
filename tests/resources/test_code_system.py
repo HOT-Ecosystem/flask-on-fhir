@@ -4,7 +4,7 @@ from ..base_test import FlaskFHIRTestCase
 from flask import Flask, jsonify
 from flask_on_fhir import *
 from flask_on_fhir.extension import FHIR
-from flask_on_fhir.resources.code_system import CodeSystemResource
+from flask_on_fhir.restful_resources import CodeSystemResource
 
 
 class CodeSystemTestCase(FlaskFHIRTestCase):

@@ -1,6 +1,6 @@
 from functools import update_wrapper
 from flask import make_response, request, current_app
-from .core import *
+from flask_on_fhir.core import *
 
 LOG = logging.getLogger(__name__)
 

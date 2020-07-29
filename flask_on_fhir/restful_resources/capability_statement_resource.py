@@ -1,10 +1,9 @@
 from datetime import datetime
-from flask import current_app, url_for, _app_ctx_stack, g
-from fhirclient.models.capabilitystatement import *
+from flask import current_app
+from fhirclient.models.capabilitystatement import CapabilityStatement, CapabilityStatementRest
 from fhirclient.models.fhirdate import FHIRDate
-from flask_restful import Api, Resource
 
-from .fhir_resource import FHIRResource
+from flask_on_fhir.restful_resources.fhir_resource import FHIRResource
 
 
 class CapabilityStatementResource(FHIRResource):
@@ -16,10 +15,7 @@ class CapabilityStatementResource(FHIRResource):
     def get_resource_type(self) -> str:
         return CapabilityStatement.resource_type
 
-    def get(self, *_args, **_kwargs):
-        return self._get().as_json(), 200
-
-    def _get(self) -> CapabilityStatement:
+    def build_resource(self) -> CapabilityStatement:
         cs: CapabilityStatement = CapabilityStatement()
         cs.fhirVersion = '4.0.0'
         cs.status = 'active'

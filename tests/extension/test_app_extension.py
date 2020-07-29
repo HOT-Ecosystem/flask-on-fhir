@@ -1,10 +1,7 @@
 from fhirclient.models.valueset import ValueSet
 
-from flask_on_fhir.resources.code_system import CodeSystemResource
-from flask_on_fhir.resources.fhir_resource import FHIRResource
 from ..base_test import FlaskFHIRTestCase
 from flask import Flask, jsonify
-from flask_on_fhir import *
 from flask_on_fhir.extension import FHIR
 
 

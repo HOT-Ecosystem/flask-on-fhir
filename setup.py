@@ -16,7 +16,7 @@ setup(
     author_email='djiao@jhu.edu',
     description='A FLASK extension to for building FHIR RESTful API',
     long_description=__doc__,
-    packages=['flask_on_fhir', 'flask_on_fhir.resources'],
+    packages=['flask_on_fhir', 'flask_on_fhir.restful_resources'],
     zip_safe=False,
     include_package_data=True,
     platforms='any',
