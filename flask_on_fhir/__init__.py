@@ -6,6 +6,7 @@
     :license: MIT, see LICENSE for more details.
 """
 from .extension import FHIR
+from .data_engine import DataEngine, CapabilityStatementDataEngine
 
 __all__ = ['FHIR']
 
