@@ -17,7 +17,7 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'flask-on-fhir'
+project = 'Flask-on-FHIR'
 copyright = '2020, Dazhi Jiao'
 author = 'Dazhi Jiao'
 
