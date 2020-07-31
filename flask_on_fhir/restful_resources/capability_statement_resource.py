@@ -12,5 +12,6 @@ class CapabilityStatementResource(FHIRResource):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-    def get_resource_type(self) -> str:
+    @classmethod
+    def get_resource_type(cls) -> str:
         return CapabilityStatement.resource_type

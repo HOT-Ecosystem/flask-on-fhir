@@ -28,8 +28,9 @@ class FHIR(Api):
         if 'data_engine' not in resource_class_kwargs:
             resource_class_kwargs['data_engine'] = self.data_engine
         kwargs['resource_class_kwargs'] = resource_class_kwargs
+        urls = list(urls)
         urls.append(f'/{resource.get_resource_type()}')
-        urls.append(f'/{resource.get_resource_type()}/<str:resource_id>')
+        urls.append(f'/{resource.get_resource_type()}/<resource_id>')
         self.add_resource(resource, *urls, **kwargs)
         self.fhir_resources.append(resource)
 

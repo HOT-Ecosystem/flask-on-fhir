@@ -10,8 +10,8 @@ parser.add_argument('system', type=str, required=False)
 
 
 class NamingSystemResource(FHIRResource):
-    def __init__(self):
-        ...
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
     @classmethod
     def get_resource_type(cls) -> str:

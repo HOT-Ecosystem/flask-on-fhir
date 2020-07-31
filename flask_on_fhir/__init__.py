@@ -8,7 +8,7 @@
 from .extension import FHIR
 from .data_engine import DataEngine, CapabilityStatementDataEngine
 
-__all__ = ['FHIR']
+__all__ = ['FHIR', 'DataEngine', 'CapabilityStatementDataEngine']
 
 # Set default logging handler to avoid "No handler found" warnings.
 import logging
