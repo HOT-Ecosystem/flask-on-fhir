@@ -24,11 +24,14 @@ class FHIR(Api):
         self.fhir_resources.append(CapabilityStatementResource)
 
     def add_fhir_resource(self, resource, *urls, **kwargs):
-        resource_class_kwargs = kwargs.get('resource_class_kwargs', {})
+        resource_class_kwargs = kwargs.pop('resource_class_kwargs', {})
         if 'data_engine' not in resource_class_kwargs:
             resource_class_kwargs['data_engine'] = self.data_engine
         kwargs['resource_class_kwargs'] = resource_class_kwargs
-        self.add_resource(resource, '/' + resource.get_resource_type(), *urls, **kwargs)
+        urls.append(f'/{resource.get_resource_type()}')
+        urls.append(f'/{resource.get_resource_type()}/<str:resource_id>')
+        self.add_resource(resource, *urls, **kwargs)
+        self.fhir_resources.append(resource)
 
     def operation(self, name: str, **kwargs):
         def decorator(func):
