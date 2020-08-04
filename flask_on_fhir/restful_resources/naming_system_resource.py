@@ -17,11 +17,3 @@ class NamingSystemResource(FHIRResource):
     def get_resource_type(cls) -> str:
         return NamingSystem.resource_type
 
-    def build_resource(self, *args, **kwards) -> NamingSystem:
-        ...
-
-
-    # @self.fhir.operation('lookup')
-    # def lookup(self):
-    #     args = parser.parse_args(strict=True)
-    #     return 'lookup', 200
