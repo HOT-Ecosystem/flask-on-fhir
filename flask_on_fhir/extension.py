@@ -2,7 +2,7 @@ from fhirclient.models.bundle import Bundle
 from fhirclient.models.identifier import Identifier
 from flask import Flask, _app_ctx_stack, current_app
 from flask_restful import Api
-from functools import wraps
+import functools
 from typing import Callable
 
 from flask_on_fhir.data_engine import CapabilityStatementDataEngine
@@ -60,9 +60,12 @@ class FHIR(Api):
             local_params = params
 
             def __init__(self, fn):
+                functools.update_wrapper(self, fn)
                 self.fn = fn
 
             def __set_name__(self, owner, name):
+                if owner:
+                    self.fn.owner = owner
                 resource_type_op = getattr(owner, 'resource_type', None)
                 if callable(resource_type_op):
                     resource_type = owner.resource_type()
@@ -73,20 +76,16 @@ class FHIR(Api):
                 self.local_fhir_app.add_fhir_resource_read(resource_type, self)
 
             def __call__(self, *args, **kwargs):
-                from functools import partial
-                identifier = Identifier()
-                identifier.value = kwargs['resource_id']
-                kwargs['resource_id'] = identifier
-                func = partial(self.fn, None)
+                func = functools.partial(self.fn, self.fn.owner) if hasattr(self.fn, 'owner') else self.fn
                 resp = func(*args, **kwargs)
                 if isinstance(resp, Bundle):
                     # do something about bundle?
                     ...
                 return resp.as_json(), 200
 
-            def __get__(self, instance, owner):
-                from functools import partial
-                return partial(self.__call__, instance)
+            # def __get__(self, instance, owner):
+            #     from functools import partial
+            #     return partial(self.__call__, instance)
 
         return Decorator
 

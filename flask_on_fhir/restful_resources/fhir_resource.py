@@ -20,26 +20,13 @@ class FHIRResource(Resource):
     def get_resource_type(cls) -> str:
         ...
 
-    # @classmethod
-    # def read(cls, url):
-    #     print(url)
-    #     def decorator(_func):
-    #         @wraps(_func)
-    #         def wrapper(*args, **kwargs):
-    #             kwargs['identifier'] = Identifier(value=kwargs['identifier'])
-    #             resp = _func(*args, **kwargs)
-    #             if isinstance(resp, Bundle):
-    #                 # do something about bundle?
-    #                 ...
-    #             return resp.as_json(), 200
-    #
-    # def get(self, *args, **kwargs):
-    #     resource_type = self.get_resource_type()
-    #     if hasattr(self, 'data_engine'):
-    #         fhir_resource: resource.Resource = self.data_engine.get_fhir_resource(resource_type, *args, **kwargs)
-    #         return fhir_resource
-    #     else:
-    #         return None
+    def get(self, *args, **kwargs):
+        resource_type = self.get_resource_type()
+        if hasattr(self, 'data_engine'):
+            fhir_resource: resource.Resource = self.data_engine.get_fhir_resource(resource_type, *args, **kwargs)
+            return fhir_resource.as_json(), 200
+        else:
+            return None
 
 
 

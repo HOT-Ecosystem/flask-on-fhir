@@ -65,6 +65,7 @@ def code_system() -> CodeSystem:
           "count": 92
     }
     """))
+    return cs
 
 
 def test_fhir_read(fhir, client, code_system):
@@ -76,19 +77,20 @@ def test_fhir_read(fhir, client, code_system):
             return CodeSystem.resource_type
 
         @fhir.read(params={})
-        def readme(self, resource_id: Identifier) -> CodeSystem:
-            if resource_id.value == 'summary':
+        def readme(self, resource_id: str) -> CodeSystem:
+            if resource_id == 'summary':
                 return self.local_code_system
             else:
                 return None
+
+    cs, port = ReadTest().readme('summary')
+    assert cs['resourceType'] == 'CodeSystem'
 
     res = client.get('/CodeSystem/summary')
     assert res.status_code == 200
     assert res.json['resourceType'] == 'CodeSystem'
     assert res.json['id'] == 'summary'
 
-    res = client.get('CodeSystem/notexist')
-    assert res.status_code == 404
 
 
 
