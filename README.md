@@ -39,6 +39,26 @@ curl http://127.0.0.1:5000/metadata
 
 ## Implement a FHIR Resource EndPoint
 
-...
+### Use decorator
+
+```python
+from fhirclient.models.codesystem import CodeSystem
+
+class CodeSystemResource(object):
+    @classmethod
+    def resource_type(cls) -> str:
+        return CodeSystem.resource_type
+
+    @fhir.read(params={})
+    def readme(self, resource_id: str) -> CodeSystem:
+        if resource_id == 'summary':
+            code_system = CodeSystem()
+            code_system.id = 'summary'
+            code_system.name = 'Summary Code System'
+            return code_system
+        else:
+            return None
+
+```
 
 
