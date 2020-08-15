@@ -6,7 +6,7 @@ import functools
 from typing import Callable, Dict, Type
 
 from flask_on_fhir.data_engine import CapabilityStatementDataEngine
-from flask_on_fhir.restful_resources import CapabilityStatementResource
+from flask_on_fhir.restful_resources import CapabilityStatementResource, FHIRResource
 import logging
 
 LOG = logging.getLogger(__name__)
@@ -41,10 +41,26 @@ class FHIR(Api):
         self.add_resource(resource, *urls, **kwargs)
         self.fhir_resources[resource.resource_type()] = resource
 
+    @classmethod
+    def create_new_fhir_resource(cls, resource_type: str):
+        class NewFHIRResource(FHIRResource):
+            @classmethod
+            def resource_type(cls):
+                return resource_type
+        return NewFHIRResource
+
     def add_fhir_resource_read(self, resource_type: str, func: Callable):
-        # just add the url for now. TODO: Manage resources
+        self.regisiter_resource_rest_operation(resource_type, 'read', func)
+
+        # Add url rule in flask
         url = f'/{resource_type}/<resource_id>'
         current_app.add_url_rule(url, resource_type, func)
+
+    def regisiter_resource_rest_operation(self, resource_type: str, name: str, func: Callable):
+        if resource_type not in self.fhir_resources:
+            self.fhir_resources[resource_type] = FHIR.create_new_fhir_resource(resource_type)
+        resource: Type = self.fhir_resources[resource_type]
+        resource.add_rest_operation(name, func)
 
     def read(self, params={}):
         """

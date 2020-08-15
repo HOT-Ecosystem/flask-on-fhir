@@ -8,7 +8,8 @@ class FHIRResource(Resource):
     build FHIR responses
     """
 
-    operations = []
+    rest_operations = {}
+    fhir_operations = {}
 
     def __init__(self, *args, **kwargs):
         self.data_engine = kwargs.get('data_engine')
@@ -24,6 +25,14 @@ class FHIRResource(Resource):
             return fhir_resource.as_json(), 200
         else:
             return None
+
+    @classmethod
+    def add_rest_operation(cls, name, func):
+        cls.rest_operations[name] = func
+
+    @classmethod
+    def add_fhir_operation(cls, name, func):
+        cls.fhir_operations[name] = func
 
 
 
