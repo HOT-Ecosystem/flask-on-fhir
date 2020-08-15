@@ -83,8 +83,14 @@ def test_fhir_read(fhir, client, code_system):
             else:
                 return None
 
+    # test with decorator
     cs, port = ReadTest().readme('summary')
     assert cs['resourceType'] == 'CodeSystem'
+
+    # test the wrapped function without decorator
+    rt = ReadTest()
+    cs = rt.readme.__wrapped__(rt, 'summary')
+    assert cs.resource_type == 'CodeSystem'
 
     res = client.get('/CodeSystem/summary')
     assert res.status_code == 200
