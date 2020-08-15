@@ -1,7 +1,8 @@
 from flask import request, current_app, _app_ctx_stack
+from flask.globals import _app_ctx_err_msg
 from collections.abc import Iterable
-import logging
 from werkzeug.local import LocalProxy
+import logging
 
 LOG = logging.getLogger(__name__)
 
@@ -11,6 +12,8 @@ DEFAULT_OPTIONS = dict()
 
 def _find_fhir():
     top = _app_ctx_stack.top
+    if top is None:
+        raise RuntimeError(_app_ctx_err_msg)
     return top.fhir
 
 
@@ -76,4 +79,5 @@ def flexible_str(obj):
     else:
         return str(obj)
 
-current_fhir = LocalProxy
+
+current_fhir = LocalProxy(_find_fhir)
