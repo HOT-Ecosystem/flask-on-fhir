@@ -12,4 +12,5 @@
 
 pytest
 pytest-flask
+pytest-mock
 sphinx
