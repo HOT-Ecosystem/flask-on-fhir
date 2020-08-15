@@ -1,10 +1,5 @@
-from fhirclient.models.bundle import Bundle
-from fhirclient.models.identifier import Identifier
 from flask_restful import Resource
 from fhirclient.models import resource
-
-from flask_on_fhir.core import current_fhir
-from functools import wraps
 
 
 class FHIRResource(Resource):

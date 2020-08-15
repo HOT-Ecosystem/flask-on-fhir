@@ -1,5 +1,4 @@
 from fhirclient.models.bundle import Bundle
-from fhirclient.models.identifier import Identifier
 from flask import Flask, _app_ctx_stack, current_app
 from flask_restful import Api
 import functools
@@ -8,7 +7,6 @@ from typing import Callable
 from flask_on_fhir.data_engine import CapabilityStatementDataEngine
 from flask_on_fhir.restful_resources import CapabilityStatementResource
 import logging
-from werkzeug.local import LocalProxy
 
 LOG = logging.getLogger(__name__)
 
@@ -43,7 +41,7 @@ class FHIR(Api):
         self.fhir_resources.append(resource)
 
     def add_fhir_resource_read(self, resource_type: str, func: Callable):
-        # just add the url for now
+        # just add the url for now. TODO: Manage resources
         url = f'/{resource_type}/<resource_id>'
         current_app.add_url_rule(url, resource_type, func)
 
@@ -72,7 +70,6 @@ class FHIR(Api):
                 else:
                     ...  # throw an exception
 
-                # url = f'/{resource_type}/<id>'
                 self.local_fhir_app.add_fhir_resource_read(resource_type, self)
 
             def __call__(self, *args, **kwargs):
@@ -82,10 +79,6 @@ class FHIR(Api):
                     # do something about bundle?
                     ...
                 return resp.as_json(), 200
-
-            # def __get__(self, instance, owner):
-            #     from functools import partial
-            #     return partial(self.__call__, instance)
 
         return Decorator
 
