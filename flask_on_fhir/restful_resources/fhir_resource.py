@@ -8,15 +8,17 @@ class FHIRResource(Resource):
     build FHIR responses
     """
 
+    operations = []
+
     def __init__(self, *args, **kwargs):
         self.data_engine = kwargs.get('data_engine')
 
     @classmethod
-    def get_resource_type(cls) -> str:
+    def resource_type(cls) -> str:
         ...
 
     def get(self, *args, **kwargs):
-        resource_type = self.get_resource_type()
+        resource_type = self.resource_type()
         if hasattr(self, 'data_engine'):
             fhir_resource: resource.Resource = self.data_engine.get_fhir_resource(resource_type, *args, **kwargs)
             return fhir_resource.as_json(), 200

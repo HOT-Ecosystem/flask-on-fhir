@@ -14,6 +14,6 @@ class NamingSystemResource(FHIRResource):
         super().__init__(*args, **kwargs)
 
     @classmethod
-    def get_resource_type(cls) -> str:
+    def resource_type(cls) -> str:
         return NamingSystem.resource_type
 

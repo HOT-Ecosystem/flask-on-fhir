@@ -12,7 +12,7 @@ class CodeSystemResource(FHIRResource):
         super().__init__(*args, **kwargs)
 
     @classmethod
-    def get_resource_type(cls) -> str:
+    def resource_type(cls) -> str:
         return CodeSystem.resource_type
 
 

@@ -1,8 +1,9 @@
 from fhirclient.models.bundle import Bundle
+from fhirclient.models.capabilitystatement import CapabilityStatement
 from flask import Flask, _app_ctx_stack, current_app
 from flask_restful import Api
 import functools
-from typing import Callable
+from typing import Callable, Dict, Type
 
 from flask_on_fhir.data_engine import CapabilityStatementDataEngine
 from flask_on_fhir.restful_resources import CapabilityStatementResource
@@ -15,7 +16,7 @@ class FHIR(Api):
 
     def __init__(self, app=None, data_engine=None, **kwargs):
         self._options = kwargs
-        self.fhir_resources = []
+        self.fhir_resources: Dict[str, Type] = {}
         self.data_engine = data_engine
         super().__init__(app, **kwargs)
 
@@ -23,7 +24,7 @@ class FHIR(Api):
         super().init_app(app)
         self.add_resource(CapabilityStatementResource, '/metadata',
                           resource_class_kwargs={'data_engine': CapabilityStatementDataEngine()})
-        self.fhir_resources.append(CapabilityStatementResource)
+        self.fhir_resources[CapabilityStatement.resource_type] = CapabilityStatementResource
         ctx = _app_ctx_stack.top
         if ctx is not None:
             if not hasattr(ctx, 'fhir'):
@@ -35,10 +36,10 @@ class FHIR(Api):
             resource_class_kwargs['data_engine'] = self.data_engine
         kwargs['resource_class_kwargs'] = resource_class_kwargs
         urls = list(urls)
-        urls.append(f'/{resource.get_resource_type()}')
-        urls.append(f'/{resource.get_resource_type()}/<resource_id>')
+        urls.append(f'/{resource.resource_type()}')
+        urls.append(f'/{resource.resource_type()}/<resource_id>')
         self.add_resource(resource, *urls, **kwargs)
-        self.fhir_resources.append(resource)
+        self.fhir_resources[resource.resource_type()] = resource
 
     def add_fhir_resource_read(self, resource_type: str, func: Callable):
         # just add the url for now. TODO: Manage resources
