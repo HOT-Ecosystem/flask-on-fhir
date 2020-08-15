@@ -70,7 +70,7 @@ def code_system() -> CodeSystem:
 
 def test_fhir_read(fhir, client, code_system):
     # @fhir_resource(name="CodeSystem")
-    class ReadTest(FHIRResource):
+    class ReadTest(object):
         local_code_system = code_system
         @classmethod
         def resource_type(cls) -> str:
