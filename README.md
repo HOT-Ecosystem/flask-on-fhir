@@ -43,13 +43,14 @@ curl http://127.0.0.1:5000/metadata
 
 ```python
 from fhirclient.models.codesystem import CodeSystem
+from flask_on_fhir.decorator import fhir_read
 
 class CodeSystemResource(object):
     @classmethod
     def resource_type(cls) -> str:
         return CodeSystem.resource_type
 
-    @fhir.read(params={})
+    @fhir_read(params={})
     def readme(self, resource_id: str) -> CodeSystem:
         if resource_id == 'summary':
             code_system = CodeSystem()

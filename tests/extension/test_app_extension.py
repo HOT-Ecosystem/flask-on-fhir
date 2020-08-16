@@ -1,3 +1,6 @@
+from flask_on_fhir.decorator import fhir_read
+
+
 def test_metadata(client, fhir):
     res = client.get('/metadata')
     assert res.status_code == 200
@@ -10,7 +13,7 @@ def test_add_rest_operation_in_class(client, fhir, code_system):
         def resource_type(cls):
             return 'CodeSystem'
 
-        @fhir.read(params={})
+        @fhir_read(params={})
         def read(self, resource_id: str):
             return code_system
 
@@ -18,7 +21,7 @@ def test_add_rest_operation_in_class(client, fhir, code_system):
 
 
 def test_add_rest_operation_in_function(client, fhir, code_system):
-    @fhir.read(params={})
+    @fhir_read(params={})
     def read_op(resource_id: str):
         return code_system
 

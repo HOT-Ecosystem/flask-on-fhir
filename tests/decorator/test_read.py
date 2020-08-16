@@ -3,6 +3,7 @@ from flask_on_fhir.core import current_fhir
 from fhirclient.models.identifier import Identifier
 from fhirclient.models.resource import Resource
 from fhirclient.models.codesystem import CodeSystem
+from flask_on_fhir.decorator import fhir_read
 import json
 
 from flask_on_fhir.restful_resources import FHIRResource
@@ -16,7 +17,7 @@ def test_fhir_read(fhir, client, code_system):
         def resource_type(cls) -> str:
             return CodeSystem.resource_type
 
-        @fhir.read(params={})
+        @fhir_read(params={})
         def readme(self, resource_id: str) -> CodeSystem:
             if resource_id == 'summary':
                 return self.local_code_system
